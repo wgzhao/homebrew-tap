@@ -3,9 +3,9 @@ class Lingbox < Formula
   homepage "https://github.com/wgzhao/ling-box"
   # Build from source on every platform: cgo statically links MuPDF
   # from go-fitz's bundled libs, so no precompiled binaries are used.
-  url "https://github.com/wgzhao/ling-box/archive/refs/tags/v0.6.0.tar.gz"
-  version "0.6.0"
-  sha256 "a2dc5f8983d411ee98c6b9e0b3e295cef8dbdc7af87929c1bbbc2d8615e165a9"
+  url "https://github.com/wgzhao/ling-box/archive/refs/tags/v0.8.0.tar.gz"
+  version "0.8.0"
+  sha256 "592b7d3ba55ffc894285b799017eeec39b7ed391434784a723956d112d7344d2"
   license "Apache-2.0"
 
   depends_on "go" => :build
