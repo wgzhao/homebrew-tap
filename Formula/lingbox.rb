@@ -1,11 +1,11 @@
 class Lingbox < Formula
   desc "Cross-platform CLI toolbox for developers"
   homepage "https://github.com/wgzhao/ling-box"
-  # Build from source on every platform: cgo statically links MuPDF
-  # from go-fitz's bundled libs, so no precompiled binaries are used.
-  url "https://github.com/wgzhao/ling-box/archive/refs/tags/v0.8.0.tar.gz"
-  version "0.8.0"
-  sha256 "592b7d3ba55ffc894285b799017eeec39b7ed391434784a723956d112d7344d2"
+  # Build from source on every platform. The codebase is pure Go (no cgo),
+  # so the binary is static and dependency-free with no external C libraries.
+  url "https://github.com/wgzhao/ling-box/archive/refs/tags/v0.8.1.tar.gz"
+  version "0.8.1"
+  sha256 "d9e18f384e3474fdd98ec2b99ea650caad4a8afdb77fa0cc31be567240e7921d"
   license "Apache-2.0"
 
   depends_on "go" => :build
