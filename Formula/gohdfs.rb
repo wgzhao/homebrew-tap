@@ -9,19 +9,19 @@ class Gohdfs < Formula
   # self-contained and have no runtime dependencies.
   on_macos do
     on_arm do
-      url "https://github.com/wgzhao/hdfs-go/releases/download/v2.5.0/gohdfs-v2.5.0-darwin-arm64.tar.gz"
-      sha256 "8f390760a4ef59202219c94017a0f3b5a58c4d4d6e639ca888b272001ba86725"
+      url "https://github.com/wgzhao/hdfs-go/releases/download/v2.6.0/gohdfs-v2.6.0-darwin-arm64.tar.gz"
+      sha256 "6afab2fe1664dde804d64b446e8cbcb06f84b7a5b32a0068e005f2480e0d949e"
     end
     on_intel do
-      url "https://github.com/wgzhao/hdfs-go/releases/download/v2.5.0/gohdfs-v2.5.0-darwin-amd64.tar.gz"
-      sha256 "d421f17a756a2b556de26c9df7479ca9d2aba037887153b6ee75239698d11082"
+      url "https://github.com/wgzhao/hdfs-go/releases/download/v2.6.0/gohdfs-v2.6.0-darwin-amd64.tar.gz"
+      sha256 "8fe627e1f4ef600fc281b2eec525a3fe3ca1a4b80153f4edb28dd610a7e39ee8"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/wgzhao/hdfs-go/releases/download/v2.5.0/gohdfs-v2.5.0-linux-amd64.tar.gz"
-      sha256 "457e86dd7c60b9d31b79db76d729f9e6eb60fa3ed7613c18f56a6c5bb1dc5b0e"
+      url "https://github.com/wgzhao/hdfs-go/releases/download/v2.6.0/gohdfs-v2.6.0-linux-amd64.tar.gz"
+      sha256 "2b2d228b2697581e1cd2d3c3f96ada9412a82b959c9d93ffeb21b54f295eb013"
     end
   end
 
@@ -31,7 +31,6 @@ class Gohdfs < Formula
   end
 
   test do
-    # The CLI prints its version to stderr and exits with status 1.
-    assert_match version.to_s, shell_output("#{bin}/hdfs --version 2>&1", 1)
+    assert_match version.to_s, shell_output("#{bin}/hdfs --version")
   end
 end
