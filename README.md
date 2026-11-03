@@ -2,16 +2,31 @@
 
 Formulae for [wgzhao](https://github.com/wgzhao)'s command-line tools.
 
+## Formulae
+
+| Formula | Installs | Description |
+| --- | --- | --- |
+| [lingbox](#lingbox) | `lingbox` | Developer CLI toolbox: encoding, hashing, QR codes, format conversion, terminal image display, and network/IP utilities |
+| [gohdfs](#gohdfs) | `hdfs` | Native Go HDFS client with Hadoop FileSystem-like commands |
+
 ## Install
 
 ```sh
 brew tap wgzhao/tap
-brew install lingbox   # or: brew install gohdfs
+brew trust wgzhao/tap   # required on Homebrew 6+ for non-official taps
+brew install lingbox
+brew install gohdfs
+```
+
+Or install a single formula by fully qualified name, which trusts only that formula:
+
+```sh
+brew install wgzhao/tap/gohdfs
 ```
 
 ## lingbox
 
-[lingbox](https://github.com/wgzhao/ling-box) (玲珑盒) is a cross-platform CLI toolbox for developers: URL/base64/bcrypt/QR/password utilities, terminal image display, and PDF rendering.
+[lingbox](https://github.com/wgzhao/ling-box) (玲珑盒) is a cross-platform CLI toolbox for developers: URL/base64/unicode encoding, bcrypt hashing, QR codes, password/UUID generation, JSON/YAML/CSV conversion, terminal image display, and network/IP utilities.
 
 ```sh
 lingbox --help
@@ -26,7 +41,14 @@ hdfs --version
 hdfs ls /user
 ```
 
-Prebuilt binaries are available for macOS on Intel and Apple Silicon, and for Linux on x86_64.
+## Platforms
+
+Both formulae install prebuilt static binaries from GitHub Releases:
+
+| Formula | macOS Intel | macOS Apple Silicon | Linux x86_64 | Linux arm64 |
+| --- | :-: | :-: | :-: | :-: |
+| lingbox | yes | yes | yes | yes |
+| gohdfs | yes | yes | yes | - |
 
 ## Note
 
