@@ -48,7 +48,7 @@ Both formulae install prebuilt static binaries from GitHub Releases:
 | Formula | macOS Intel | macOS Apple Silicon | Linux x86_64 | Linux arm64 |
 | --- | :-: | :-: | :-: | :-: |
 | lingbox | yes | yes | yes | yes |
-| gohdfs | yes | yes | yes | - |
+| gohdfs | yes | yes | yes | yes |
 
 ## Note
 

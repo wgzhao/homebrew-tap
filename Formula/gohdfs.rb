@@ -19,6 +19,10 @@ class Gohdfs < Formula
   end
 
   on_linux do
+    on_arm do
+      url "https://github.com/wgzhao/hdfs-go/releases/download/v2.6.0/gohdfs-v2.6.0-linux-arm64.tar.gz"
+      sha256 "8b0673cde25d4f4948f6f27eee31019dc27b7c8964022ac3cb7191398f75609f"
+    end
     on_intel do
       url "https://github.com/wgzhao/hdfs-go/releases/download/v2.6.0/gohdfs-v2.6.0-linux-amd64.tar.gz"
       sha256 "2b2d228b2697581e1cd2d3c3f96ada9412a82b959c9d93ffeb21b54f295eb013"
