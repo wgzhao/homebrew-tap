@@ -8,6 +8,7 @@ Formulae for [wgzhao](https://github.com/wgzhao)'s command-line tools.
 | --- | --- | --- |
 | [lingbox](#lingbox) | `lingbox` | Developer CLI toolbox: encoding, hashing, QR codes, format conversion, terminal image display, and network/IP utilities |
 | [gohdfs](#gohdfs) | `hdfs` | Native Go HDFS client with Hadoop FileSystem-like commands |
+| [hive-go](#hive-go) | `hive` | Pure-Go HiveServer2 client and CLI |
 
 ## Install
 
@@ -16,12 +17,14 @@ brew tap wgzhao/tap
 brew trust wgzhao/tap   # required on Homebrew 6+ for non-official taps
 brew install lingbox
 brew install gohdfs
+brew install hive-go
 ```
 
 Or install a single formula by fully qualified name, which trusts only that formula:
 
 ```sh
 brew install wgzhao/tap/gohdfs
+brew install wgzhao/tap/hive-go
 ```
 
 ## lingbox
@@ -41,14 +44,32 @@ hdfs --version
 hdfs ls /user
 ```
 
+## hive-go
+
+[hive-go](https://github.com/wgzhao/hive-go) is a pure-Go HiveServer2 client and command-line tool. It speaks the Thrift `TCLIService` protocol directly, so it needs no JVM, Hadoop client libraries, CGO, or local Hive installation. The formula installs the `hive` command.
+
+hive-go v0.1.0 is a pre-1.0 public preview. It supports `NONE`, `NOSASL`, and `LDAP` authentication, protocol V10/V6, a REPL and script mode, and table/vertical/CSV/TSV/JSON output.
+
+```sh
+hive --version
+hive -u hive2://127.0.0.1:10000/default -n hive -e "SELECT 1"
+```
+
+> Homebrew core also provides Apache Hive as `hive`. If you already have that formula installed, both packages provide a `hive` executable; keep only one linked:
+>
+> ```sh
+> brew unlink hive && brew link hive-go
+> ```
+
 ## Platforms
 
-Both formulae install prebuilt static binaries from GitHub Releases:
+All formulae install prebuilt static binaries from GitHub Releases:
 
 | Formula | macOS Intel | macOS Apple Silicon | Linux x86_64 | Linux arm64 |
 | --- | :-: | :-: | :-: | :-: |
 | lingbox | yes | yes | yes | yes |
 | gohdfs | yes | yes | yes | yes |
+| hive-go | yes | yes | yes | yes |
 
 ## Note
 
