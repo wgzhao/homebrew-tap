@@ -7,7 +7,7 @@ Formulae for [wgzhao](https://github.com/wgzhao)'s command-line tools.
 | Formula | Installs | Description |
 | --- | --- | --- |
 | [lingbox](#lingbox) | `lingbox` | Developer CLI toolbox: encoding, hashing, QR codes, format conversion, terminal image display, and network/IP utilities |
-| [gohdfs](#gohdfs) | `hdfs` | Native Go HDFS client with Hadoop FileSystem-like commands |
+| [hdfs-go](#hdfs-go) | `hdfs` | Native Go HDFS client with Hadoop FileSystem-like commands |
 | [hive-go](#hive-go) | `hive` | Pure-Go HiveServer2 client and CLI |
 
 ## Install
@@ -16,16 +16,20 @@ Formulae for [wgzhao](https://github.com/wgzhao)'s command-line tools.
 brew tap wgzhao/tap
 brew trust wgzhao/tap   # required on Homebrew 6+ for non-official taps
 brew install lingbox
-brew install gohdfs
+brew install hdfs-go
 brew install hive-go
 ```
 
 Or install a single formula by fully qualified name, which trusts only that formula:
 
 ```sh
-brew install wgzhao/tap/gohdfs
+brew install wgzhao/tap/hdfs-go
 brew install wgzhao/tap/hive-go
 ```
+
+> `gohdfs` was renamed to `hdfs-go`. Installed copies migrate automatically on
+> the next `brew update && brew upgrade`; `brew install gohdfs` still resolves
+> to `hdfs-go` via `formula_renames.json`.
 
 ## lingbox
 
@@ -35,9 +39,9 @@ brew install wgzhao/tap/hive-go
 lingbox --help
 ```
 
-## gohdfs
+## hdfs-go
 
-[gohdfs](https://github.com/wgzhao/hdfs-go) is a native Go client for HDFS. The formula installs the `hdfs` command-line client, which provides `ls`, `put`, `get`, `cat`, `mkdir`, `rm`, and other Hadoop FileSystem-like commands without requiring a JVM or a local Hadoop installation.
+[hdfs-go](https://github.com/wgzhao/hdfs-go) is a native Go client for HDFS. The formula installs the `hdfs` command-line client, which provides `ls`, `put`, `get`, `cat`, `mkdir`, `rm`, and other Hadoop FileSystem-like commands without requiring a JVM or a local Hadoop installation.
 
 ```sh
 hdfs --version
@@ -68,7 +72,7 @@ All formulae install prebuilt static binaries from GitHub Releases:
 | Formula | macOS Intel | macOS Apple Silicon | Linux x86_64 | Linux arm64 |
 | --- | :-: | :-: | :-: | :-: |
 | lingbox | yes | yes | yes | yes |
-| gohdfs | yes | yes | yes | yes |
+| hdfs-go | yes | yes | yes | yes |
 | hive-go | yes | yes | yes | yes |
 
 ## Note

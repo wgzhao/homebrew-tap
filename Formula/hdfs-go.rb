@@ -1,4 +1,4 @@
-class Gohdfs < Formula
+class HdfsGo < Formula
   desc "Native HDFS client and command-line tool"
   homepage "https://github.com/wgzhao/hdfs-go"
   license "MIT"
