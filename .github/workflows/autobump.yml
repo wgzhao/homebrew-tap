@@ -1,0 +1,64 @@
+name: Autobump formulae
+
+on:
+  schedule:
+    # Every day at 03:37 UTC.
+    - cron: "37 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: autobump
+  cancel-in-progress: false
+
+jobs:
+  autobump:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update formulae
+        id: bump
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 scripts/autobump.py | tee "$RUNNER_TEMP/autobump.log"
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open pull request
+        if: steps.bump.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          branch=autobump/formulae
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add Formula
+          git commit -m "Bump formulae to latest upstream releases"
+          git push --force origin "$branch"
+
+          if [ "$(gh pr list --head "$branch" --state open --json number --jq 'length')" = "0" ]; then
+            {
+              echo "Automated formula update from upstream GitHub Releases."
+              echo
+              echo '```'
+              grep -v '^::' "$RUNNER_TEMP/autobump.log" || true
+              echo '```'
+            } > "$RUNNER_TEMP/pr-body.md"
+            gh pr create \
+              --base main \
+              --head "$branch" \
+              --title "Bump formulae to latest upstream releases" \
+              --body-file "$RUNNER_TEMP/pr-body.md"
+          fi
