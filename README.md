@@ -75,6 +75,14 @@ All formulae install prebuilt static binaries from GitHub Releases:
 | hdfs-go | yes | yes | yes | yes |
 | hive-go | yes | yes | yes | yes |
 
+## Automation
+
+A scheduled GitHub Actions workflow (`.github/workflows/autobump.yml`) checks the
+upstream repositories once a day and, when a new release appears, downloads the
+four platform assets, recalculates their SHA-256 checksums, and opens a pull
+request updating the affected formulae. The workflow can also be run manually
+from the Actions tab.
+
 ## Note
 
 The lingbox formula is also prepared for submission to [homebrew/homebrew-core](https://github.com/Homebrew/homebrew-core), which requires the repository to gain some traction first (see Homebrew's [notability policy](https://docs.brew.sh/Adding-Software-to-Homebrew#well-knownness)).
