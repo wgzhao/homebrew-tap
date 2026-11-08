@@ -9,23 +9,23 @@ class Lingbox < Formula
   # are self-contained and have no runtime dependencies.
   on_macos do
     on_arm do
-      url "https://github.com/wgzhao/ling-box/releases/download/v0.9.0/lingbox-macos-arm64"
-      sha256 "535234b98b2f133108bd5eb7f72683a18061f786f87cfb017c30dac73c244c07"
+      url "https://github.com/wgzhao/ling-box/releases/download/v0.10.0/lingbox-macos-arm64"
+      sha256 "e27f9386e1a419f5cf8c92648673895feb6f8e92c6fefda99c7c0473af8f30db"
     end
     on_intel do
-      url "https://github.com/wgzhao/ling-box/releases/download/v0.9.0/lingbox-macos-x86-64"
-      sha256 "543b34309d7c7b2f79b3a080c7a9cd3005c9de0dca63c8a30297fb40beee13e1"
+      url "https://github.com/wgzhao/ling-box/releases/download/v0.10.0/lingbox-macos-x86-64"
+      sha256 "77e395d94e0c2d8a126013768310483ee5c246cf2902b0333c7362fd39c37901"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/wgzhao/ling-box/releases/download/v0.9.0/lingbox-linux-arm64"
-      sha256 "b786a0b8012ca4b312a10d99aac9b8dd9563b74cea6c8a7ea194132638453e77"
+      url "https://github.com/wgzhao/ling-box/releases/download/v0.10.0/lingbox-linux-arm64"
+      sha256 "2eca077ac12f7d88e28e17619ce9c34d12141fe23694cd738245350f82f9fc64"
     end
     on_intel do
-      url "https://github.com/wgzhao/ling-box/releases/download/v0.9.0/lingbox-linux-x86-64"
-      sha256 "1be3be01c8ae09a1b733ee912c70498ec898a5a559689468de128967b36c8781"
+      url "https://github.com/wgzhao/ling-box/releases/download/v0.10.0/lingbox-linux-x86-64"
+      sha256 "9f7d7c32e3e258cdbe57ff41264cb793cdb6ddb60c3d51dd15b779b540694cfa"
     end
   end
 
