@@ -9,23 +9,23 @@ class HiveGo < Formula
   # self-contained and have no runtime dependencies.
   on_macos do
     on_arm do
-      url "https://github.com/wgzhao/hive-go/releases/download/v0.1.0/hive-v0.1.0-darwin-arm64.tar.gz"
-      sha256 "30480aff24d4829275226b75320e213298072278a9d7cd87d4336b2d3e8d6d37"
+      url "https://github.com/wgzhao/hive-go/releases/download/v0.2.0/hive-v0.2.0-darwin-arm64.tar.gz"
+      sha256 "1fdf14096f9dfc5a82913b6e7c289198ae9162feafe382c059432274b8772300"
     end
     on_intel do
-      url "https://github.com/wgzhao/hive-go/releases/download/v0.1.0/hive-v0.1.0-darwin-amd64.tar.gz"
-      sha256 "c48731174eeca18cc893fb51886bb3c775011eb5c5928d0c64ef5e572f0dd5ca"
+      url "https://github.com/wgzhao/hive-go/releases/download/v0.2.0/hive-v0.2.0-darwin-amd64.tar.gz"
+      sha256 "d3ec137a434ae476759feff332cf4a6a43d78b110d9b263fae704d7d0c6cbcdd"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/wgzhao/hive-go/releases/download/v0.1.0/hive-v0.1.0-linux-arm64.tar.gz"
-      sha256 "2d94edb68131580a6bbdb7ff81695705737bcfa2ab3a3d087449d95f5eb12d4d"
+      url "https://github.com/wgzhao/hive-go/releases/download/v0.2.0/hive-v0.2.0-linux-arm64.tar.gz"
+      sha256 "3105fd5605b61c4f6633fed84915139f7d1c5859f8883141bdcba5fba53343dc"
     end
     on_intel do
-      url "https://github.com/wgzhao/hive-go/releases/download/v0.1.0/hive-v0.1.0-linux-amd64.tar.gz"
-      sha256 "36afed4308401d3a3795121470a5bdebb293ab377ed2df803a02d5fe680c0682"
+      url "https://github.com/wgzhao/hive-go/releases/download/v0.2.0/hive-v0.2.0-linux-amd64.tar.gz"
+      sha256 "325a22f6f13da582592308a1dd6575592ebf6cf6da14cc6ddb89dabd2e5228af"
     end
   end
 
