@@ -27,15 +27,29 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import http.client
 import json
 import os
 import re
 import sys
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
+from typing import Callable, TypeVar
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 USER_AGENT = "wgzhao-homebrew-tap-autobump"
+
+# GitHub's release CDN occasionally answers with a transient 5xx (504 in
+# practice) or drops a connection mid-download. Retry those with exponential
+# backoff instead of failing the whole bump.
+RETRYABLE_STATUS = {429, 500, 502, 503, 504}
+MAX_ATTEMPTS = 5
+BACKOFF_SECONDS = 3
+MAX_BACKOFF_SECONDS = 60
+
+T = TypeVar("T")
 
 FORMULAE = [
     {
@@ -73,6 +87,51 @@ FORMULAE = [
 URL_VERSION_RE = re.compile(r"/releases/download/(v?[^/\"]+)/")
 
 
+def retry_delay(attempt: int, retry_after: str | None) -> float:
+    if retry_after:
+        try:
+            return min(max(float(retry_after), 1.0), MAX_BACKOFF_SECONDS)
+        except ValueError:
+            pass
+    return min(BACKOFF_SECONDS * 2 ** (attempt - 1), MAX_BACKOFF_SECONDS)
+
+
+def with_retries(action: str, operation: Callable[[], T]) -> T:
+    """Run operation, retrying transient network failures with backoff."""
+    error: Exception = RuntimeError(f"{action} did not run")
+    retry_after: str | None = None
+
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            return operation()
+        except urllib.error.HTTPError as exc:
+            retry_after = exc.headers.get("Retry-After") if exc.headers else None
+            exc.close()
+            if exc.code not in RETRYABLE_STATUS:
+                raise
+            error = exc
+        except (
+            urllib.error.URLError,
+            TimeoutError,
+            ConnectionError,
+            http.client.IncompleteRead,
+        ) as exc:
+            retry_after = None
+            error = exc
+
+        if attempt == MAX_ATTEMPTS:
+            break
+        delay = retry_delay(attempt, retry_after)
+        print(
+            f"::warning::{action} failed (attempt {attempt}/{MAX_ATTEMPTS}): "
+            f"{error}; retrying in {delay:.0f}s",
+            file=sys.stderr,
+        )
+        time.sleep(delay)
+
+    raise error
+
+
 def api_request(url: str) -> dict:
     headers = {
         "Accept": "application/vnd.github+json",
@@ -83,8 +142,12 @@ def api_request(url: str) -> dict:
     if token:
         headers["Authorization"] = f"Bearer {token}"
     request = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(request, timeout=60) as response:
-        return json.load(response)
+
+    def fetch() -> dict:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            return json.load(response)
+
+    return with_retries(f"GET {url}", fetch)
 
 
 def latest_release(repo: str) -> tuple[str, dict[str, str]]:
@@ -101,11 +164,15 @@ def latest_release(repo: str) -> tuple[str, dict[str, str]]:
 
 def remote_sha256(url: str) -> str:
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    digest = hashlib.sha256()
-    with urllib.request.urlopen(request, timeout=300) as response:
-        while chunk := response.read(1024 * 1024):
-            digest.update(chunk)
-    return digest.hexdigest()
+
+    def download() -> str:
+        digest = hashlib.sha256()
+        with urllib.request.urlopen(request, timeout=180) as response:
+            while chunk := response.read(1024 * 1024):
+                digest.update(chunk)
+        return digest.hexdigest()
+
+    return with_retries(f"GET {url}", download)
 
 
 def current_version(text: str) -> str:
